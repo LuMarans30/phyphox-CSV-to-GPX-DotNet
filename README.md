@@ -1,6 +1,6 @@
 # Phyphox CSV to GPX
 
-This app converts the recorded CSV file to a GPX one in order to visualize the track using third-party platforms such as [Sports Track Live](https://www.sportstracklive.com/en).
+This application converts the recorded CSV file to a GPX file so that the track can be viewed using third-party platforms such as [Sports Track Live](https://www.sportstracklive.com/en).
 
 ## Usage:
 
