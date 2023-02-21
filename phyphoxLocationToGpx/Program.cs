@@ -25,7 +25,7 @@ internal sealed class Program
         {
             if (args.Length != 2)
             {
-                WriteColored("\nUsage: CSV2GPX.exe phyphoxFile.csv output.gpx", ConsoleColor.Red, newLine: true);
+                WriteColored("\nUsage: ./executable input.csv output.gpx", ConsoleColor.Red, newLine: true);
 
                 Hr();
 
@@ -127,6 +127,11 @@ internal sealed class Program
             WriteColored("\nReading file: " + phyphoxFilePath, ConsoleColor.Cyan, newLine: true);
 
             phyphoxData = File.ReadAllLines(phyphoxFilePath);
+
+            if (phyphoxData.Length == 0)
+            {
+                throw new("The file is empty");
+            }
 
             WriteColored("\nFile read successfully", ConsoleColor.Green, newLine: true);
 
