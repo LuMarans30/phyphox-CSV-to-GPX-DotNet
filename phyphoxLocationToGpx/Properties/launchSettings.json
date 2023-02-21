@@ -2,7 +2,7 @@
   "profiles": {
     "phyphoxLocationToGpx": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\Andre\\Downloads\\Raw Data - Semicolon.csv\" .\\outputSemicolon.gpx"
+      "commandLineArgs": ".\\input.csv .\\output.gpx"
     }
   }
 }

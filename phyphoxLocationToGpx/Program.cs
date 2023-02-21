@@ -156,7 +156,7 @@ internal sealed class Program
                     metadata = AddMetadata();
                 }
 
-            } while (string.IsNullOrEmpty(scelta) || scelta != "n");
+            } while (string.IsNullOrEmpty(scelta) || scelta != "n|y");
 
             WriteColored("\nParsing data from file... ", ConsoleColor.Cyan, newLine: true);
 
