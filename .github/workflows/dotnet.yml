@@ -29,4 +29,4 @@ jobs:
     - name: Run app
       run: | 
        cd phyphoxLocationToGpx
-       dotnet run
+       dotnet run https://raw.githubusercontent.com/LuMarans30/phyphox-CSV-to-GPX/main/phyphoxLocationToGpx/input.csv ./output.gpx
