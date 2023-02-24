@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSV2GPX
-{
-    internal class Metadata
-    {
+﻿namespace CSV2GPX {
+    internal class Metadata {
         public string author { get; set; }
         public string name { get; set; }
         public string desc { get; set; }
@@ -18,8 +10,7 @@ namespace CSV2GPX
         public string keywords { get; set; }
         public string bounds { get; set; }
 
-        public Metadata(string author, string name, string desc, string email, string url, string urlname, string time, string keywords, string bounds): this()
-        {
+        public Metadata(string author, string name, string desc, string email, string url, string urlname, string time, string keywords, string bounds) : this() {
             this.author = author;
             this.name = name;
             this.desc = desc;
@@ -31,8 +22,7 @@ namespace CSV2GPX
             this.bounds = bounds;
         }
 
-        public Metadata()
-        {
+        public Metadata() {
             author = "";
             name = "";
             desc = "";
@@ -44,16 +34,13 @@ namespace CSV2GPX
             bounds = "";
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             string metadata = $@"<metadata>";
 
             //Foreach variable in the class
 
-            foreach (var property in GetType().GetProperties())
-            {
-                if (!string.IsNullOrEmpty(property.GetValue(this)?.ToString()))
-                {
+            foreach (System.Reflection.PropertyInfo property in GetType().GetProperties()) {
+                if (!string.IsNullOrEmpty(property.GetValue(this)?.ToString())) {
                     metadata += $"\n\t<{property.Name}>{property.GetValue(this)}</{property.Name}>";
                 }
             }
