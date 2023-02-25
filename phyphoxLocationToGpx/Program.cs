@@ -15,15 +15,12 @@ internal class Program {
 
     private static string? outputFilePath;
 
-    private static string[]? phyphoxData;
-
     private static readonly string inputExt = ".csv", outputExt = ".gpx";
 
     public static void Main(string[] args) {
         try {
 
             if (args.Length > 0) {
-
                 phyphoxFilePath = args[0];
                 IsInputPathValid();
             }
@@ -51,18 +48,6 @@ internal class Program {
 
             Co.Hr();
 
-            //Reading the Phyphox CSV file
-            Co.WriteColored($"\nReading file: {phyphoxFilePath}", ConsoleColor.Cyan, newLine: true);
-            phyphoxData = File.ReadAllLines(phyphoxFilePath!);
-
-            //Checks if the Phyphox CSV file is empty; if it is, throws an exception
-            if (phyphoxData.Length == 0) {
-                throw new("The file is empty");
-            }
-
-            Co.WriteColored("\nFile read successfully", ConsoleColor.Green, newLine: true);
-            Co.Hr();
-
             //Asks the user if they want to add more information (GPX file metadata)
             if (Co.AskConfirm("\nDo you want to add additional information (author, track name, email, etc.)?", ConsoleColor.Cyan, newLine: false)) {
                 Co.WriteColored("\nLeave blank to not include a piece of information", ConsoleColor.Yellow, newLine: true);
@@ -72,7 +57,7 @@ internal class Program {
 
             //Parses the CSV data
             Co.WriteColored("\nParsing data from file... ", ConsoleColor.Cyan, newLine: true);
-            routePoints = new Parser(phyphoxData).Parse();
+            routePoints = new Parser(phyphoxFilePath!).Parse();
             Co.WriteColored($"\nDone! The input file has been parsed successfully, it contains {routePoints.Count} route points", ConsoleColor.Green, newLine: true);
             Co.Hr();
 
@@ -80,12 +65,13 @@ internal class Program {
             GpxWriter gw = new(routePoints, metadata!);
             Co.WriteColored("\nGenerating output file content... \n", ConsoleColor.Cyan, newLine: true);
             gw.GenerateGpxContent(showProgressBar: true);
-            Co.WriteColored("\nWriting output file... ", ConsoleColor.Cyan, newLine: true);
-
-            //Writes the gpx string into a file in the path specified by the user.
-
-            gw.WriteGpxFile(outputFilePath!);
+            Console.WriteLine("\n");
             Co.Hr();
+
+            Co.WriteColored("\nWriting output file... ", ConsoleColor.Cyan, newLine: true);
+            //Writes the gpx string into a file in the path specified by the user.
+            gw.WriteGpxFile(outputFilePath!);
+
             Co.WriteColored($"\nDone! The {outputExt} file has been written successfully: {outputFilePath!}\n", ConsoleColor.Green, newLine: true);
 
             //Program ends without errors

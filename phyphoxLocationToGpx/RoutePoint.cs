@@ -40,17 +40,13 @@ namespace CSV2GPX
         public RoutePoint(string line)
         {
             var values = line.Split(new char[] { ',', ';', '\t' });
-           
-            Latitude = double.Parse(values[1], CultureInfo.InvariantCulture);
-            Longitude = double.Parse(values[2], CultureInfo.InvariantCulture);
-            Altitude = double.Parse(values[3], CultureInfo.InvariantCulture);
-            AltitudeWgs84 = double.Parse(values[4], CultureInfo.InvariantCulture);
-            Speed = double.Parse(values[5], CultureInfo.InvariantCulture);
-            Direction = double.Parse(values[6], CultureInfo.InvariantCulture);
-            Distance = double.Parse(values[7], CultureInfo.InvariantCulture);
-            HAccuracy = double.Parse(values[8], CultureInfo.InvariantCulture);
-            VAccuracy = double.Parse(values[9], CultureInfo.InvariantCulture);
-            Satellites = double.Parse(values[10], CultureInfo.InvariantCulture);
+
+            var properties = GetType().GetProperties();
+
+            for (int i = 0; i < properties.Length; i++) {
+                double value = double.Parse(values[i+1], CultureInfo.InvariantCulture);
+                properties[i].SetValue(this, value);
+            }
         }
 
         public int CompareTo(RoutePoint? other)

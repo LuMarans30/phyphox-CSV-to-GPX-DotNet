@@ -35,17 +35,12 @@
         }
 
         public override string ToString() {
-            string metadata = $@"<metadata>";
 
-            //Foreach variable in the class
-
-            foreach (System.Reflection.PropertyInfo property in GetType().GetProperties()) {
-                if (!string.IsNullOrEmpty(property.GetValue(this)?.ToString())) {
-                    metadata += $"\n\t<{property.Name}>{property.GetValue(this)}</{property.Name}>";
-                }
-            }
-
-            return metadata + $"\n</metadata>";
+            return string
+                .Join("", GetType()
+                .GetProperties()
+                .Select(o => !string.IsNullOrEmpty(o.GetValue(this)?.ToString()) ? $"<{o.Name}>{o.GetValue(this)}</{o.Name}>": "")
+                .ToArray());
         }
     }
 }

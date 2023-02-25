@@ -1,5 +1,6 @@
 ﻿using ShellProgressBar;
 using System.Text;
+using System.Xml.Linq;
 
 namespace CSV2GPX
 {
@@ -34,27 +35,25 @@ namespace CSV2GPX
                 ProgressBarOnBottom = true
             };
 
-            ProgressBar pbar = new(totalTicks, "", options);
+            ProgressBar pbar = new(totalTicks, string.Empty, options);
 
-            gpxFile = "<?xml version=\"1.0\"?>";
-            gpxFile += "\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\" version=\"1.1\" creator=\"CSV2GPX (LuMarans30)\">";
+            XDocument doc = new(
+                new("1.0", "utf-8", null),
+                new XElement(
+                    "gpx",
+                    new XAttribute("version", "1.1"),
+                    new XAttribute("creator", "CSV2GPX (LuMarans30)"),
+                    Metadata is not null?new XElement("metadata", Metadata?.ToString()):"",
+                        new XElement("rte",
+                        RoutePoints.Select(obj => {
+                            i++;
+                            if (showProgressBar) pbar.Tick($"Step {i} of {totalTicks}");
+                            return XElement.Parse(obj.ToString());
+                        }))
+                )
+            );
 
-            //Additional information entered by the user if any is written on the file between "metadata" tags
-            if (Metadata != null) gpxFile += $"\n{Metadata}";
-
-            gpxFile += "\n<rte>";
-
-            //Writes each route point into the string using the ToString() method
-            RoutePoints.ForEach(obj => 
-            {
-                gpxFile += obj;
-                i++;
-                if(showProgressBar) pbar.Tick($"Step {i} of {totalTicks}");
-            });
-
-            gpxFile += "\n</rte>";
-
-            gpxFile += "\n</gpx>";
+            gpxFile = doc.ToString();
         }
 
         /// <summary>
