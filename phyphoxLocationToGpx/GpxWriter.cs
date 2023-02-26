@@ -43,8 +43,8 @@ namespace CSV2GPX
                     "gpx",
                     new XAttribute("version", "1.1"),
                     new XAttribute("creator", "CSV2GPX (LuMarans30)"),
-                    Metadata is not null?new XElement("metadata", Metadata?.ToString()):"",
-                        new XElement("rte",
+                    Metadata is not null? new XElement("metadata", Metadata.GetMetadata()) : "",
+                    new XElement("rte",
                         RoutePoints.Select(obj => {
                             i++;
                             if (showProgressBar) pbar.Tick($"Step {i} of {totalTicks}");

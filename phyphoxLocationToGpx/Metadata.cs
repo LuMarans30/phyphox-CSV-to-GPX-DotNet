@@ -1,4 +1,6 @@
-﻿namespace CSV2GPX {
+﻿using System.Xml.Linq;
+
+namespace CSV2GPX {
     internal class Metadata {
         public string author { get; set; }
         public string name { get; set; }
@@ -34,13 +36,12 @@
             bounds = "";
         }
 
-        public override string ToString() {
+        public XElement[] GetMetadata() {
 
-            return string
-                .Join("", GetType()
+            return GetType()
                 .GetProperties()
-                .Select(o => !string.IsNullOrEmpty(o.GetValue(this)?.ToString()) ? $"<{o.Name}>{o.GetValue(this)}</{o.Name}>": "")
-                .ToArray());
+                .Select(o => new XElement(o.Name, (string?) o.GetValue(this) != "" ? o.GetValue(this)!.ToString() : string.Empty))
+                .ToArray();
         }
     }
 }
