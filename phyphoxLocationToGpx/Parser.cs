@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace CSV2GPX {
+﻿namespace CSV2GPX {
     internal class Parser {
 
         private string? PhyphoxFilePath { get; set; }
