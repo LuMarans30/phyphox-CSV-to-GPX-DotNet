@@ -10,7 +10,9 @@ This application converts the recorded CSV file to a GPX file so that the track 
 
 ## Usage:
 
+```
 ./executable input.csv output.gpx
+```
 
 ## External dependencies:
 
